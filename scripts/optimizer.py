@@ -77,7 +77,7 @@ class Optimizer:
                 score = loop.run_until_complete(self.test())
             return None
 
-        for opt_round in range(self.max_rounds):
+        for opt_round in range(self.max_rounds): #self.max_rounds ==4
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 

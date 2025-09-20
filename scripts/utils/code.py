@@ -15,8 +15,8 @@ def extract_test_cases_from_jsonl(entry_point: str, dataset: Union[CodeDataset, 
     dataset_value = dataset.value if isinstance(dataset, CodeDataset) else dataset
 
     file_map = {
-        CodeDataset.HUMAN_EVAL.value: "data/datasets/humaneval_public_test.jsonl",
-        CodeDataset.MBPP.value: "data/datasets/mbpp_public_test.jsonl",
+        CodeDataset.HUMAN_EVAL.value: "/home/zpc/AFlow/data/datasets/humaneval_public_test.jsonl",
+        CodeDataset.MBPP.value: "/home/zpc/AFlow/data/datasets/mbpp_public_test.jsonl",
         CodeDataset.LIVE_CODE_BENCH.value: "data/datasets/livecodebench_public_test.jsonl",
     }
     hardcoded_cases_map = {

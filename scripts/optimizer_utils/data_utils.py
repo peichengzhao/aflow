@@ -9,7 +9,7 @@ import pandas as pd
 from scripts.logs import logger
 from scripts.utils.common import read_json_file, write_json_file
 
-
+#这个类主要用于管理和处理多轮实验的数据
 class DataUtils:
     def __init__(self, root_path: str):
         self.root_path = root_path
@@ -45,7 +45,7 @@ class DataUtils:
 
         return unique_top_scores
 
-    def select_round(self, items):
+    def select_round(self, items): #根据概率分布从项目列表中选择一个轮次
         if not items:
             raise ValueError("Item list is empty.")
 

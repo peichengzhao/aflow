@@ -1,7 +1,7 @@
 import ast
 import json
 import sys
-import faulthandler
+import faulthandler # debugging
 import platform
 
 # used for debugging to time steps
@@ -57,7 +57,7 @@ def timeout_handler(signum, frame):
 # used to capture stdout as a list
 # from https://stackoverflow.com/a/16571630/6416660
 # alternative use redirect_stdout() from contextlib
-class Capturing(list):
+class Capturing(list): #
     def __enter__(self):
         self._stdout = sys.stdout
         sys.stdout = self._stringio = StringIO()

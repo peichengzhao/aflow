@@ -10,6 +10,8 @@ from data.download_data import download
 from scripts.optimizer import Optimizer
 from scripts.async_llm import LLMsConfig
 
+
+
 class ExperimentConfig:
     def __init__(self, dataset: str, question_type: str, operators: List[str]):
         self.dataset = dataset
@@ -56,13 +58,15 @@ EXPERIMENT_CONFIGS: Dict[str, ExperimentConfig] = {
 }
 
 
+#命令行参数解析
 def parse_args():
     parser = argparse.ArgumentParser(description="AFlow Optimizer")
     parser.add_argument(
         "--dataset",
         type=str,
-        choices=list(EXPERIMENT_CONFIGS.keys()),
-        required=True,
+        # choices=list(EXPERIMENT_CONFIGS.keys()),
+        # required=True,
+        default="GSM8K",
         help="Dataset type",
     )
     parser.add_argument("--sample", type=int, default=4, help="Sample count")
@@ -73,7 +77,7 @@ def parse_args():
         help="Optimized result save path",
     )
     parser.add_argument("--initial_round", type=int, default=1, help="Initial round")
-    parser.add_argument("--max_rounds", type=int, default=20, help="Max iteration rounds")
+    parser.add_argument("--max_rounds", type=int, default=4, help="Max iteration rounds")
     parser.add_argument("--check_convergence", type=bool, default=True, help="Whether to enable early stop")
     parser.add_argument("--validation_rounds", type=int, default=1, help="Validation rounds")
     parser.add_argument(
@@ -85,13 +89,13 @@ def parse_args():
     parser.add_argument(
         "--opt_model_name",
         type=str,
-        default="claude-3-5-sonnet-20241022",
+        default="Qwen/Qwen3-32B",
         help="Specifies the name of the model used for optimization tasks.",
     )
     parser.add_argument(
         "--exec_model_name",
         type=str,
-        default="gpt-4o-mini",
+        default="Qwen/Qwen3-14B",
         help="Specifies the name of the model used for execution tasks.",
     )
     return parser.parse_args()
@@ -118,9 +122,9 @@ if __name__ == "__main__":
         )
 
     download(["datasets"], force_download=args.if_force_download) # remove download initial_rounds in new version.
-
+    #optimizer:基于大语言模型(LLM)的图优化器，用于自动优化工作流程或任务图
     optimizer = Optimizer(
-        dataset=config.dataset,
+        dataset=config.dataset, 
         question_type=config.question_type,
         opt_llm_config=opt_llm_config,
         exec_llm_config=exec_llm_config,
@@ -132,6 +136,9 @@ if __name__ == "__main__":
         max_rounds=args.max_rounds,
         validation_rounds=args.validation_rounds,
     )
+
+
+
 
     # Optimize workflow via setting the optimizer's mode to 'Graph'
     optimizer.optimize("Graph")

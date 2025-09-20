@@ -93,17 +93,4 @@ For custom tasks, you can reference the code in the `benchmark` folder. Inherit 
 - Support more benchmarks
 - Support multimodality tasks
 
-## Citation
-
-If you use AFlow in your research, please cite our paper:
-
-```
-@inproceedings{
-   zhang2025aflow,
-   title={{AF}low: Automating Agentic Workflow Generation},
-   author={Jiayi Zhang and Jinyu Xiang and Zhaoyang Yu and Fengwei Teng and Xiong-Hui Chen and Jiaqi Chen and Mingchen Zhuge and Xin Cheng and Sirui Hong and Jinlin Wang and Bingnan Zheng and Bang Liu and Yuyu Luo and Chenglin Wu},
-   booktitle={The Thirteenth International Conference on Learning Representations},
-   year={2025},
-   url={https://openreview.net/forum?id=z5uVAKwmjf}
-}
-```
+## Citation```

@@ -34,9 +34,7 @@ class LLMsConfig:
         if cls._default_config is None:
             # Look for the config file in common locations
             config_paths = [
-                Path("config/config2.yaml"),
-                Path("config2.yaml"),
-                Path("./config/config2.yaml")
+                Path("/home/zpc/AFlow/config/config2.example.yaml"),
             ]
             
             config_file = None

@@ -1,11 +1,27 @@
 models:
- "<model_name>": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
+ "Qwen/Qwen3-14B": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
    api_type: "openai"  # or azure / ollama / groq etc.
-   base_url: "<your base url>" 
-   api_key: "<your api key>"
+   base_url: "https://api.siliconflow.cn/v1" 
+   api_key: "sk-xzohugwarmyyohskxfmcqjtpxplygzjsdssxbuwbamkqztzx"
    temperature: 0
- "<model_name>":  
+ "Qwen/Qwen3-32B": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
+   api_type: "openai"  # or azure / ollama / groq etc.
+   base_url: "https://api.siliconflow.cn/v1" 
+   api_key: "sk-xzohugwarmyyohskxfmcqjtpxplygzjsdssxbuwbamkqztzx"
+   temperature: 0
+ "GPT-4o":  
    api_type: "openai"  
-   base_url: "<your base url>"
-   api_key: "<your api key>"
+   base_url: "https://api.deepbricks.ai/v1/"
+   api_key: "sk-C3gsaWJaOsmjrNv1fIobc4zEEsEkD15T98j80Vc8mNuSE420"
    temperature: 0
+ "o3-mini":  
+   api_type: "openai"  
+   base_url: "https://api.deepbricks.ai/v1/"
+   api_key: "sk-C3gsaWJaOsmjrNv1fIobc4zEEsEkD15T98j80Vc8mNuSE420"
+   temperature: 0
+ "Claude-Sonnet-4":  
+   api_type: "openai"  
+   base_url: "https://api.deepbricks.ai/v1/"
+   api_key: "sk-C3gsaWJaOsmjrNv1fIobc4zEEsEkD15T98j80Vc8mNuSE420"
+   temperature: 0
+

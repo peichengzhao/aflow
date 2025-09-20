@@ -22,7 +22,7 @@ class ConvergenceUtils:
         """
         Read JSON file, create a new file if it doesn't exist, then return the data.
         """
-        rounds_dir = os.path.join(root_path, "workflows")
+        rounds_dir = os.path.join(root_path, "workflows") 
         result_file = os.path.join(rounds_dir, "results.json")
 
         # Ensure directory exists
@@ -51,7 +51,7 @@ class ConvergenceUtils:
             rounds[round_number].append(score)
         return rounds
 
-    def calculate_avg_and_std(self):
+    def calculate_avg_and_std(self): #平均得分列表和标准差列表
         """
         Calculate average score and standard deviation for each round, return two lists: average scores and standard deviations.
         """
@@ -65,7 +65,7 @@ class ConvergenceUtils:
             stds.append(np.std(scores))
         return avg_scores, stds
 
-    def check_convergence(self, top_k=3, z=0, consecutive_rounds=5):
+    def check_convergence(self, top_k=3, z=0, consecutive_rounds=5): #动态选择表现最好的top_k轮作为参考
         """
         Check for convergence. z is the z-score corresponding to the confidence level.
         consecutive_rounds is the number of consecutive rounds that must meet the stop condition.

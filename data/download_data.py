@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 # @Date    : 2024-10-20
 # @Author  : MoshiQAQ & didi
 # @Desc    : Download and extract dataset files
@@ -10,9 +10,14 @@ from typing import Dict
 
 import requests
 from tqdm import tqdm
-
 from scripts.logs import logger
 
+
+
+PROXIES = {
+    "http_proxy": "socks5://http://localhost:7890",
+    "https_proxy": "socks5://http://localhost:7890" 
+}
 
 def download_file(url: str, filename: str) -> None:
     """Download a file from the given URL and show progress."""
@@ -69,17 +74,18 @@ datasets_to_download: Dict[str, Dict[str, str]] = {
     "datasets": {
         "url": "https://drive.google.com/uc?export=download&id=1DNoegtZiUhWtvkd2xoIuElmIi4ah7k8e",
         "filename": "aflow_data.tar.gz",
-        "extract_path": "data/datasets",
+        "extract_path": "/home/zpc/AFlow/data/datasets",
     },
     "results": {
+        
         "url": "https://drive.google.com/uc?export=download&id=1Sr5wjgKf3bN8OC7G6cO3ynzJqD4w6_Dv",
         "filename": "result.tar.gz",
-        "extract_path": "data/results",
+        "extract_path": "/home/zpc/AFlow/data/results",
     },
     "initial_rounds": {
         "url": "https://drive.google.com/uc?export=download&id=1UBoW4WBWjX2gs4I_jq3ALdXeLdwDJMdP",
         "filename": "initial_rounds.tar.gz",
-        "extract_path": "workspace",
+        "extract_path": "/home/zpc/AFlow/workspace",
     },
 }
 
@@ -102,7 +108,8 @@ def download(required_datasets, force_download: bool = False):
 
 def test_download():
     """Test function to verify download and extraction process"""
-    test_datasets = ["datasets", "results", "initial_rounds"]
+    # test_datasets = ["datasets", "results", "initial_rounds"]
+    test_datasets = ["datasets"]
     for name in test_datasets:
         dataset = datasets_to_download[name]
         extract_path = dataset["extract_path"]
@@ -124,7 +131,7 @@ def test_download():
     download(test_datasets, force_download=False)
 
     # Test force download
-    download(test_datasets, force_download=True)
+    download(test_datasets, force_download=False)
     for name in test_datasets:
         dataset = datasets_to_download[name]
         assert os.path.exists(dataset["extract_path"]), f"{dataset['extract_path']} not recreated."

@@ -29,6 +29,7 @@ class EvaluationUtils:
 
     async def evaluate_graph(self, optimizer, directory, validation_n, data, initial=False):
         evaluator = Evaluator(eval_path=directory)
+        #不同数据集上评估图结构性能的评估器
         sum_score = 0
 
         for i in range(validation_n):

@@ -4,16 +4,49 @@ import re
 import time
 import traceback
 from typing import List
+import tkinter as tk
+from tkinter import filedialog, messagebox, scrolledtext
 
 from scripts.prompts.optimize_prompt import (
     WORKFLOW_CUSTOM_USE,
     WORKFLOW_INPUT,
     WORKFLOW_OPTIMIZE_PROMPT,
     WORKFLOW_TEMPLATE,
+    TOOL_FALLBACK_PROMPT,
+    TOOL_GENERATION_PROMPT,
+    TOOL_SELECTION_PROMPT
 )
 from scripts.logs import logger
 
 
+
+
+def read_py_file_to_string(file_path):
+    """
+    读取.py文件内容并返回字符串格式
+    
+    参数:
+        file_path (str): Python文件的路径
+        
+    返回:
+        str: 文件内容的字符串表示
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return content
+    except Exception as e:
+        return f"读取文件时出错: {str(e)}"
+examples_str = read_py_file_to_string("/home/zpc/AFlow/scripts/tools.py")
+
+
+
+
+
+
+
+
+#围绕 “图表（graph）” 和 “提示词（prompt）” 展开，解决 “如何加载旧图表→如何生成优化指令→如何保存新图表”
 class GraphUtils:
     def __init__(self, root_path: str):
         self.root_path = root_path
@@ -45,7 +78,7 @@ class GraphUtils:
             with open(graph_file_path, "r", encoding="utf-8") as file:
                 graph_content = file.read()
         except FileNotFoundError as e:
-            logger.error(f"Error: File not found for round {round_number}: {e}")
+            logger.error(f"Error: File not found for round {round_number}: {e}")    
             raise
         except Exception as e:
             logger.error(f"Error loading prompt for round {round_number}: {e}")
@@ -81,6 +114,8 @@ class GraphUtils:
         operator_description: str,
         type: str,
         log_data: str,
+        tools: list,
+        examples: str
     ) -> str:
         graph_input = WORKFLOW_INPUT.format(
             experience=experience,
@@ -90,8 +125,12 @@ class GraphUtils:
             operator_description=operator_description,
             type=type,
             log=log_data,
+            tools=tools,
+            examples=examples_str
+        
         )
-        graph_system = WORKFLOW_OPTIMIZE_PROMPT.format(type=type)
+
+        graph_system = WORKFLOW_OPTIMIZE_PROMPT.format(type=type, examples=examples_str)
         return graph_input + WORKFLOW_CUSTOM_USE + graph_system
 
     async def get_graph_optimize_response(self, graph_optimize_node):

@@ -1,0 +1,92 @@
+2025-09-16 17:11:51 - Error: .
+ Solution: def re_arrange_array(arr, n):
+    sub_arr = arr[:n]
+    negatives = [x for x in sub_arr if x < 0]
+    positives = [x for x in sub_arr if x >= 0]
+    arr[:n] = negatives + positives
+    return arr.
+ Test: def check():
+    assert re_arrange_array([-1, 2, -3, 4, 5, 6, -7, 8, 9], 9) == [-1, -3, -7, 4, 5, 6, 2, 8, 9]
+    assert re_arrange_array([12, -14, -26, 13, 15], 5) == [-14, -26, 12, 13, 15]
+    assert re_arrange_array([10, 24, 36, -42, -39, -78, 85], 7) == [-42, -39, -78, 10, 24, 36, 85]
+
+2025-09-16 17:11:53 - Error: .
+ Solution: import re
+def check_char(string):
+    pattern = '^(?P<ch>.).*\\1$'
+    match = re.match(pattern, string) if string else None
+    return True if match else False.
+ Test: def check():
+    assert check_char("abba") == "Valid"
+    assert check_char("a") == "Valid"
+    assert check_char("abcd") == "Invalid"
+
+2025-09-16 17:11:53 - Error: .
+ Solution: def largest_neg(list1):
+    negatives = [num for num in list1 if num < 0]
+    if negatives:
+        return max(negatives)
+    return None.
+ Test: def check():
+    assert largest_neg([1,2,3,-4,-6]) == -6
+    assert largest_neg([1,2,3,-8,-9]) == -9
+    assert largest_neg([1,2,3,4,-1]) == -1
+
+2025-09-16 17:11:53 - Error: expected string or bytes-like object.
+ Solution: import re
+def remove_parenthesis(items):
+    return re.sub('\\(.*?\\)', '', items).
+ Test: def check():
+    assert remove_parenthesis(["python (chrome)"])==("python")
+    assert remove_parenthesis(["string(.abc)"])==("string")
+    assert remove_parenthesis(["alpha(num)"])==("alpha")
+
+2025-09-16 17:16:52 - Error: .
+ Solution: def count_vowels(test_str):
+    vowels = set('aeiouAEIOU')
+    count = 0
+    for i in range(1, len(test_str) - 1):
+        if test_str[i - 1] in vowels and test_str[i + 1] in vowels:
+            count += 1
+    return count.
+ Test: def check():
+    assert count_vowels('bestinstareels') == 7
+    assert count_vowels('partofthejourneyistheend') == 12
+    assert count_vowels('amazonprime') == 5
+
+2025-09-16 17:16:52 - Error: .
+ Solution: def is_samepatterns(colors, patterns):
+    if not patterns:
+        return False
+    n = len(patterns)
+    for (i, color) in enumerate(colors):
+        if color != patterns[i % n]:
+            return False
+    return True.
+ Test: def check():
+    assert is_samepatterns(["red","green","green"], ["a", "b", "b"])==True
+    assert is_samepatterns(["red","green","greenn"], ["a","b","b"])==False
+    assert is_samepatterns(["red","green","greenn"], ["a","b"])==False
+
+2025-09-16 17:16:54 - Error: .
+ Solution: from collections import defaultdict
+def max_aggregate(stdata):
+    aggregates = defaultdict(int)
+    for (key, value) in stdata:
+        aggregates[key] += value
+    return max(aggregates.values()) if aggregates else None.
+ Test: def check():
+    assert max_aggregate([('Juan Whelan',90),('Sabah Colley',88),('Peter Nichols',7),('Juan Whelan',122),('Sabah Colley',84)])==('Juan Whelan', 212)
+    assert max_aggregate([('Juan Whelan',50),('Sabah Colley',48),('Peter Nichols',37),('Juan Whelan',22),('Sabah Colley',14)])==('Juan Whelan', 72)
+    assert max_aggregate([('Juan Whelan',10),('Sabah Colley',20),('Peter Nichols',30),('Juan Whelan',40),('Sabah Colley',50)])==('Sabah Colley', 70)
+
+2025-09-16 17:17:01 - Error: .
+ Solution: def parabola_directrix(a, b, c):
+    vertex_y = c - b ** 2 / (4 * a)
+    p = 1 / (4 * a)
+    return vertex_y - p.
+ Test: def check():
+    assert parabola_directrix(5,3,2)==-198
+    assert parabola_directrix(9,8,4)==-2336
+    assert parabola_directrix(2,4,6)==-130
+
