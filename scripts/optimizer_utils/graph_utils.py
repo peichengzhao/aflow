@@ -11,10 +11,7 @@ from scripts.prompts.optimize_prompt import (
     WORKFLOW_CUSTOM_USE,
     WORKFLOW_INPUT,
     WORKFLOW_OPTIMIZE_PROMPT,
-    WORKFLOW_TEMPLATE,
-    TOOL_FALLBACK_PROMPT,
-    TOOL_GENERATION_PROMPT,
-    TOOL_SELECTION_PROMPT
+    WORKFLOW_TEMPLATE
 )
 from scripts.logs import logger
 
