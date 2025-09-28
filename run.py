@@ -5,7 +5,7 @@
 
 import argparse
 from typing import Dict, List
-
+from typing import Optional
 from data.download_data import download
 from scripts.optimizer import Optimizer
 from scripts.async_llm import LLMsConfig
@@ -89,13 +89,13 @@ def parse_args():
     parser.add_argument(
         "--opt_model_name",
         type=str,
-        default="Qwen/Qwen3-32B",
+        default="deepseek-ai/DeepSeek-V3.1",
         help="Specifies the name of the model used for optimization tasks.",
     )
     parser.add_argument(
         "--exec_model_name",
         type=str,
-        default="Qwen/Qwen3-14B",
+        default="deepseek-ai/DeepSeek-V3.1",
         help="Specifies the name of the model used for execution tasks.",
     )
     return parser.parse_args()

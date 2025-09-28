@@ -2,7 +2,7 @@ from typing import Literal
 import workspace.DROP.workflows.template.operator as operator
 import workspace.DROP.workflows.round_1.prompt as prompt_custom
 from scripts.async_llm import create_llm_instance
-
+from typing import Optional
 from scripts.evaluator import DatasetType
 
 class Workflow:

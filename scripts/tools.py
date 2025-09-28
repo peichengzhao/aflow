@@ -128,11 +128,11 @@ def quadratic_solver(a: float, b: float, c: float) -> dict:
             "roots": [root1, root2]
         }
 
-# Create tools list
-tools: List[Tool] = []
+# Create new_tools list
+new_tools: List[Tool] = []
 
 # Add addition tool
-tools.append({
+new_tools.append({
     "name": "add",
     "description": "Addition operation: Calculate sum of numbers in list",
     "function": add,
@@ -147,7 +147,7 @@ tools.append({
 })
 
 # Add subtraction tool
-tools.append({
+new_tools.append({
     "name": "subtract",
     "description": "Subtraction operation: a - b",
     "function": subtract,
@@ -159,7 +159,7 @@ tools.append({
 })
 
 # Add multiplication tool
-tools.append({
+new_tools.append({
     "name": "multiply",
     "description": "Multiplication operation: Calculate product of numbers in list",
     "function": multiply,
@@ -174,7 +174,7 @@ tools.append({
 })
 
 # Add division tool
-tools.append({
+new_tools.append({
     "name": "divide",
     "description": "Division operation: a / b, handles division by zero",
     "function": divide,
@@ -186,7 +186,7 @@ tools.append({
 })
 
 # Add exponentiation tool
-tools.append({
+new_tools.append({
     "name": "power",
     "description": "Exponentiation operation: base^exponent",
     "function": power,
@@ -198,7 +198,7 @@ tools.append({
 })
 
 # Add square root tool
-tools.append({
+new_tools.append({
     "name": "square_root",
     "description": "Square root operation: √x",
     "function": square_root,
@@ -209,7 +209,7 @@ tools.append({
 })
 
 # Add factorial tool
-tools.append({
+new_tools.append({
     "name": "factorial",
     "description": "Factorial operation: n!",
     "function": factorial,
@@ -220,7 +220,7 @@ tools.append({
 })
 
 # Add percentage tool
-tools.append({
+new_tools.append({
     "name": "percentage",
     "description": "Percentage calculation: value as percentage of total",
     "function": percentage,
@@ -232,7 +232,7 @@ tools.append({
 })
 
 # Add average tool
-tools.append({
+new_tools.append({
     "name": "average",
     "description": "Calculate average value",
     "function": average,
@@ -247,7 +247,7 @@ tools.append({
 })
 
 # Add max-min tool
-tools.append({
+new_tools.append({
     "name": "max_min",
     "description": "Find maximum and minimum values in list",
     "function": max_min,
@@ -268,7 +268,7 @@ tools.append({
 })
 
 # Add prime check tool
-tools.append({
+new_tools.append({
     "name": "is_prime",
     "description": "Check if a number is prime",
     "function": is_prime,
@@ -279,7 +279,7 @@ tools.append({
 })
 
 # Add GCD tool
-tools.append({
+new_tools.append({
     "name": "gcd",
     "description": "Calculate greatest common divisor of two numbers",
     "function": gcd,
@@ -291,7 +291,7 @@ tools.append({
 })
 
 # Add LCM tool
-tools.append({
+new_tools.append({
     "name": "lcm",
     "description": "Calculate least common multiple of two numbers",
     "function": lcm,
@@ -303,7 +303,7 @@ tools.append({
 })
 
 # Add quadratic solver tool
-tools.append({
+new_tools.append({
     "name": "quadratic_solver",
     "description": "Solve quadratic equation ax² + bx + c = 0",
     "function": quadratic_solver,
@@ -325,33 +325,5 @@ tools.append({
     }
 })
 
-# Tool calling function
-def call_tool(tool_name: str, **kwargs) -> Any:
-    """Call specified tool"""
-    for tool in tools:
-        if tool["name"] == tool_name:
-            return tool["function"](**kwargs)
-    raise ValueError(f"Tool '{tool_name}' does not exist")
 
-# Example usage
-if __name__ == "__main__":
-    # Call addition tool
-    result = call_tool("add", numbers=[1, 2, 3, 4, 5])
-    print(f"Addition result: {result}")
-    
-    # Call square root tool
-    result = call_tool("square_root", x=16)
-    print(f"Square root result: {result}")
-    
-    # Call prime check tool
-    result = call_tool("is_prime", n=17)
-    print(f"Prime check result: {result}")
-    
-    # Call quadratic solver tool
-    result = call_tool("quadratic_solver", a=1, b=-3, c=2)
-    print(f"Equation solution result: {result}")
-    
-    # Print all available tools
-    print("\nAvailable tools:")
-    for tool in tools:
-        print(f"- {tool['name']}: {tool['description']}")
+new_1_tools = new_tools

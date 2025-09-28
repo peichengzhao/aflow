@@ -1,13 +1,13 @@
 models:
- "Qwen/Qwen3-14B": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
+ "deepseek-ai/DeepSeek-V3.1": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
    api_type: "openai"  # or azure / ollama / groq etc.
    base_url: "https://api.siliconflow.cn/v1" 
-   api_key: "sk-xzohugwarmyyohskxfmcqjtpxplygzjsdssxbuwbamkqztzx"
+   api_key: "sk-qvuytnzzitcziqmefsjtanydlitmhgneqckevcltfhrdohdp"
    temperature: 0
- "Qwen/Qwen3-32B": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
+ "Qwen/Qwen3-N是撒啊啊ext-80B-A3B-Instruct": # model: "gpt-4-turbo"  # or gpt-3.5-turbo
    api_type: "openai"  # or azure / ollama / groq etc.
    base_url: "https://api.siliconflow.cn/v1" 
-   api_key: "sk-xzohugwarmyyohskxfmcqjtpxplygzjsdssxbuwbamkqztzx"
+   api_key: "sk-qvuytnzzitcziqmefsjtanydlitmhgneqckevcltfhrdohdp"
    temperature: 0
  "GPT-4o":  
    api_type: "openai"  
@@ -24,4 +24,3 @@ models:
    base_url: "https://api.deepbricks.ai/v1/"
    api_key: "sk-C3gsaWJaOsmjrNv1fIobc4zEEsEkD15T98j80Vc8mNuSE420"
    temperature: 0
-

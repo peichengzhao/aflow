@@ -15,7 +15,7 @@ from scripts.prompts.optimize_prompt import (
 )
 from scripts.logs import logger
 
-
+from typing import Optional
 
 
 def read_py_file_to_string(file_path):
@@ -68,19 +68,24 @@ class GraphUtils:
     def read_graph_files(self, round_number: int, workflows_path: str):
         prompt_file_path = os.path.join(workflows_path, f"round_{round_number}", "prompt.py")
         graph_file_path = os.path.join(workflows_path, f"round_{round_number}", "graph.py")
+        # newnewnewnewnew
+        tools_file_path = os.path.join(workflows_path, f"round_{round_number}", "tools.py")
 
         try:
             with open(prompt_file_path, "r", encoding="utf-8") as file:
                 prompt_content = file.read()
             with open(graph_file_path, "r", encoding="utf-8") as file:
                 graph_content = file.read()
+                # newnewnewnewnew
+            with open(tools_file_path, "r", encoding="utf-8") as file:
+                tools_content = file.read()
         except FileNotFoundError as e:
             logger.error(f"Error: File not found for round {round_number}: {e}")    
             raise
         except Exception as e:
             logger.error(f"Error loading prompt for round {round_number}: {e}")
             raise
-        return prompt_content, graph_content
+        return prompt_content, graph_content, tools_content
 
     def extract_solve_graph(self, graph_load: str) -> List[str]:
         pattern = r"class Workflow:.+"
@@ -156,6 +161,9 @@ class GraphUtils:
 
         with open(os.path.join(directory, "prompt.py"), "w", encoding="utf-8") as file:
             file.write(response["prompt"])
+        
+        with open(os.path.join(directory, "tools.py"), "w", encoding="utf-8") as file:
+            file.write(response["tools"])
 
         with open(os.path.join(directory, "__init__.py"), "w", encoding="utf-8") as file:
             file.write("")

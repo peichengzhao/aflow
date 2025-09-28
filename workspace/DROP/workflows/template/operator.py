@@ -13,7 +13,7 @@ from workspace.DROP.workflows.template.op_prompt import *
 from scripts.async_llm import AsyncLLM
 from scripts.logs import logger
 import re
-
+from typing import Optional
 
 from scripts.operators import Operator
 

@@ -6,9 +6,9 @@
 import asyncio
 import time
 from typing import List, Literal, Dict
-
+import re
+from typing import Optional
 from pydantic import BaseModel, Field
-
 from scripts.evaluator import DatasetType
 from scripts.optimizer_utils.convergence_utils import ConvergenceUtils
 from scripts.optimizer_utils.data_utils import DataUtils
@@ -18,10 +18,39 @@ from scripts.optimizer_utils.graph_utils import GraphUtils
 from scripts.async_llm import create_llm_instance
 from scripts.formatter import XmlFormatter, FormatError
 from scripts.logs import logger
+from scripts.tools import new_1_tools
 
 QuestionType = Literal["math", "code", "qa"]
 OptimizerType = Literal["Graph", "Test"]
+def read_py_file_to_string(file_path):
+    """
+    读取.py文件内容并返回字符串格式
+    
+    参数:
+        file_path (str): Python文件的路径
+        
+    返回:
+        str: 文件内容的字符串表示
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return content
+    except Exception as e:
+        return f"读取文件时出错: {str(e)}"
+examples_str = read_py_file_to_string("/home/zpc/AFlow/scripts/tools.py")
 
+
+def str_to_dict(str_data):
+    result_dict = {}
+    # 定义匹配 <tag>...</tag> 形式内容的正则表达式
+    pattern = r'<(\w+)>(.*?)</\1>'
+    matches = re.findall(pattern, str_data, re.DOTALL)
+    for match in matches:
+        tag_name = match[0]
+        tag_content = match[1].strip()
+        result_dict[tag_name] = tag_content
+    return result_dict
 
 class GraphOptimize(BaseModel):
     modification: str = Field(default="", description="modification")
@@ -118,7 +147,7 @@ class Optimizer:
             time.sleep(5)
 
     async def _optimize_graph(self):
-        validation_n = self.validation_rounds  # validation datasets's execution number
+        validation_n = self.validation_rounds  # validation datasets's execution  number self.validation_rounds==1
         graph_path = f"{self.root_path}/workflows"
         data = self.data_utils.load_results(graph_path)
 
@@ -135,7 +164,7 @@ class Optimizer:
             top_rounds = self.data_utils.get_top_rounds(self.sample)
             sample = self.data_utils.select_round(top_rounds)
 
-            prompt, graph_load = self.graph_utils.read_graph_files(sample["round"], graph_path)
+            prompt, graph_load, new_1_tools = self.graph_utils.read_graph_files(sample["round"], graph_path)
             graph = self.graph_utils.extract_solve_graph(graph_load)
 
             processed_experience = self.experience_utils.load_experience()
@@ -143,9 +172,8 @@ class Optimizer:
 
             operator_description = self.graph_utils.load_operators_description(self.operators)
             log_data = self.data_utils.load_log(sample["round"])
-
             graph_optimize_prompt = self.graph_utils.create_graph_optimize_prompt(
-                experience, sample["score"], graph[0], prompt, operator_description, self.type, log_data
+                experience, sample["score"], graph[0], prompt, operator_description, self.type, log_data, tools=new_1_tools, examples=examples_str
             )
 
             # Replace ActionNode with AsyncLLM and XmlFormatter
@@ -154,9 +182,10 @@ class Optimizer:
                 graph_formatter = XmlFormatter.from_model(GraphOptimize)
                 
                 # Call the LLM with formatter
+                #★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
                 response = await self.optimize_llm.call_with_format(
                     graph_optimize_prompt, 
-                    graph_formatter
+                    graph_formatter 
                 )
                 
                 # If we reach here, response is properly formatted and validated
@@ -172,19 +201,24 @@ class Optimizer:
                 if not response:
                     logger.error("Failed to extract fields from raw response, retrying...")
                     continue
-
+            #problem is here ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
             # Check if the modification meets the conditions
+            response = str_to_dict(response["response"])
+            ##################################################################################################
             check = self.experience_utils.check_modification(
                 processed_experience, response["modification"], sample["round"]
             )
-
+            # every check is False
+            if not check:
+                print("come here and find check is False")
+                continue
             # If `check` is True, break the loop; otherwise, regenerate the graph
             if check:
                 break
 
         # Save the graph and evaluate
         self.graph_utils.write_graph_files(directory, response, self.round + 1, self.dataset)
-
+    
         experience = self.experience_utils.create_experience_data(sample, response["modification"])
 
         self.graph = self.graph_utils.load_graph(self.round + 1, graph_path)

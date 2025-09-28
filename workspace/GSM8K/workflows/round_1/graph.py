@@ -2,7 +2,7 @@ from typing import Literal
 import workspace.GSM8K.workflows.template.operator as operator
 import workspace.GSM8K.workflows.round_1.prompt as prompt_custom
 from scripts.async_llm import create_llm_instance
-
+from typing import Optional
 from scripts.evaluator import DatasetType
 
 # class Workflow:

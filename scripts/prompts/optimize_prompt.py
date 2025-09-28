@@ -11,12 +11,24 @@
 # The prompt you need to generate is only the one used in `prompt_custom.XXX` within Custom. Other methods already have built-in prompts and are prohibited from being generated. Only generate those needed for use in `prompt_custom`; please remove any unused prompts in prompt_custom.
 # the generated prompt must not contain any placeholders.
 # Considering information loss, complex graphs may yield better results, but insufficient information transmission can omit the solution. It's crucial to include necessary context during the process."""
+
 WORKFLOW_OPTIMIZE_PROMPT = """You are building a flowchart and corresponding prompts to jointly solve problems of type {type}.
 Meanwhile, you need to generate some runnable tools and insert them into your flowchart to facilitate easier execution of such tasks in the future. 
+
+Your response must be formatted as XML with the following structure:
+<response>
+    <modification>Describe the specific changes made in this iteration</modification>
+    <graph>Complete code for the modified Workflow class</graph>
+    <prompt>All necessary prompt strings for prompt_custom</prompt>
+    <tools>Python code for any new tools created</tools>
+</response>
+
 Refer to the provided flowchart and prompts (which together form a basic example of a solution approach for {type} problems) to reconstruct and optimize them.
-You can add, modify, or delete nodes, parameters, or prompts. In your reply, wrap each of your modifications in XML tags.
+You can add, modify, or delete nodes, parameters, or prompts. 
+
 Ensure the modified content is complete and correct to avoid runtime errors. When optimizing, you can incorporate critical thinking methods such as review, revise, ensemble (generating multiple answers through different/similar prompts and then obtaining a final answer via voting/integration/verification of the majority answers), selfAsk, etc.
 You can also consider using Python's loops (for loops, while loops, list comprehensions), conditional statements (if-elif-else statements, ternary operators), or machine learning techniques (such as linear regression, decision trees, neural networks, clustering algorithms). The complexity of the flowchart must not exceed 10 nodes. Use logical flows and control flows (IF-ELSE branches, loops) to build a more sophisticated graphical representation.
+
 Ensure all prompts required by the current flowchart are from and included in prompt_custom (custom prompt library). Do not include any other prompts.
 Retain only the prompts in prompt_custom that need to be used and remove all unused prompts from it.
 The generated prompts must not contain any placeholders. Considering the issue of information loss: flowcharts with higher complexity may yield better results, but insufficient information transmission may lead to the omission of solutions.
@@ -58,6 +70,7 @@ When designing the workflow, implement a tool selection mechanism that:
 # You do not need to manually import prompt_custom or operator to use them; they are already included in the execution environment.
 # """
 
+
 WORKFLOW_INPUT = """
 Here is a graph and the corresponding prompt (prompt only related to the custom method) that performed excellently in a previous iteration (maximum score is 1). You must make further optimizations and improvements based on this graph. The modified graph must differ from the provided example, and the specific differences should be noted within the <modification>xxx</modification> section.\n
 <sample>
@@ -71,6 +84,14 @@ Here is a graph and the corresponding prompt (prompt only related to the custom 
 </sample>
 Below are the logs of some results with the aforementioned Graph that performed well but encountered errors, which can be used as references for optimization:
 {log}
+
+Your response must be formatted as XML with the following structure:
+<response>
+    <modification>Describe the specific changes made in this iteration</modification>
+    <graph>Complete code for the modified Workflow class</graph>
+    <prompt>All necessary prompt strings for prompt_custom</prompt>
+    <tools>Python code for any new tools created</tools>
+</response>
 
 First, provide optimization ideas. **Only one detail point can be modified at a time**, and no more than 5 lines of code may be changed per modification—extensive modifications are strictly prohibited to maintain project focus!
 When introducing new functionalities in the graph, please make sure to import the necessary libraries or modules yourself, except for operator, prompt_custom, create_llm_instance, and CostManage, which have already been automatically imported.
@@ -93,8 +114,6 @@ For the workflow, implement a tool selection strategy that:
 2. Falls back to LLM only when no suitable tool exists
 3. Documents which tools were used and why
 """
-
-
 
 WORKFLOW_CUSTOM_USE = """\nHere's an example of using the `custom` method in graph:
 ```

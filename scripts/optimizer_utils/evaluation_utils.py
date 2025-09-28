@@ -1,6 +1,6 @@
 from scripts.evaluator import Evaluator
 
-
+from typing import Optional
 class EvaluationUtils:
     def __init__(self, root_path: str):
         self.root_path = root_path
@@ -41,11 +41,11 @@ class EvaluationUtils:
                 is_test=False,
             )
 
-            cur_round = optimizer.round + 1 if initial is False else optimizer.round
+            cur_round = optimizer.round + 1 if initial is False else optimizer.round # cur_round==1
 
             new_data = optimizer.data_utils.create_result_data(cur_round, score, avg_cost, total_cost)
             data.append(new_data)
-
+            #new_data {'round': 1, 'score': np.float64(0.9393939393939394), 'avg_cost': np.float64(0.0), 'total_cost': np.float64(0.0), 'time': datetime.datetime(2025, 9, 26, 15, 38, 5, 486320)}
             result_path = optimizer.data_utils.get_results_file_path(f"{optimizer.root_path}/workflows")
             optimizer.data_utils.save_results(result_path, data)
 

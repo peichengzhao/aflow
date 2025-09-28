@@ -1,24 +1,24 @@
 {
+    "1": {
+        "score": 0.7702455590386624,
+        "success": {
+            "3": {
+                "modification": "Added ScEnsemble operator to generate multiple solutions and select the most frequent one, improving answer reliability through self-consistency voting. Also added a verification step to check if the final answer is a valid number before returning.",
+                "score": 0.9583333333333334
+            },
+            "2": {
+                "modification": "Added ScEnsemble operator to generate multiple solutions and select the most frequent one, improving answer reliability through self-consistency voting.",
+                "score": 0.9659090909090909
+            }
+        },
+        "failure": {}
+    },
     "2": {
         "score": 0.0,
         "success": {},
         "failure": {
-            "3": {
-                "modification": "Enhanced the Custom operator's prompt to explicitly request mathematical expressions and variable definitions for precise code generation by the Programmer operator.",
-                "score": 0.0
-            },
             "4": {
                 "modification": "Modify the prompt_custom.ANALYSIS_PROMPT to explicitly request mathematical expressions and variable definitions for precise code generation by the Programmer operator.",
-                "score": 0.0
-            }
-        }
-    },
-    "3": {
-        "score": 0.9659090909090909,
-        "success": {},
-        "failure": {
-            "2": {
-                "modification": "Introduce the Programmer operator to handle calculations after using Custom for analysis, ensuring numerical accuracy and proper formatting.",
                 "score": 0.0
             }
         }
